@@ -41,6 +41,7 @@ var sourceFiles = [
   "src/js/loading-spinner.js",
   "src/js/big-play-button.js",
   "src/js/error-display.js",
+  "src/js/captions-settings-display.js",
   "src/js/media/media.js",
   "src/js/media/html5.js",
   "src/js/media/flash.js",
