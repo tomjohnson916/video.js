@@ -9,15 +9,15 @@ vjs.CaptionsSettingsDisplay = vjs.Component.extend({
     vjs.Component.call(this, player, options);
 
     var captionOptions = this.captionOptions = {
-      "font-family": "Arial",
-      "font-size": "15px",
-      "color": "#FFFFFF",
-      "text-opacity": 1,
-      "background-color": "#000000",
-      "background-opacity": .5,
-      "edge-style": "none",
-      "window-color": "#000000",
-      "window-opacity": 0
+      'font-family': 'Arial',
+      'font-size': '15px',
+      'color': '#FFFFFF',
+      'text-opacity': 1,
+      'background-color': '#000000',
+      'background-opacity': 0.5,
+      'edge-style': 'none',
+      'window-color': '#000000',
+      'window-opacity': 0
     };
 
     this.hide();
@@ -128,15 +128,15 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
   };
   onCaptionBackgroundOpacityChange = function(event) {
     this.captionOptions['background-opacity'] = event.target.value;
-    captionBackgroundOpacityOutputEl.innerHTML = event.target.value + "%";
+    captionBackgroundOpacityOutputEl.innerHTML = event.target.value + '%';
   };
   onCaptionTextOpacityChange = function(event) {
     this.captionOptions['text-opacity'] = event.target.value / 100;
-    captionTextOpacityOutputEl.innerHTML = event.target.value + "%";
+    captionTextOpacityOutputEl.innerHTML = event.target.value + '%';
   };
   onCaptionWindowOpacityChange = function(event) {
     this.captionOptions['window-opacity'] = event.target.value;
-    captionWindowOpacityOutputEl.innerHTML = event.target.value + "%";
+    captionWindowOpacityOutputEl.innerHTML = event.target.value + '%';
   };
   // Define Elements
   captionSizeEl = this.contentEl_.querySelector('.vjs-caption-font-size');
