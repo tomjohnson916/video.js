@@ -141,22 +141,23 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
     this.setEdgeStyle(event.target.value);
   };
   onCaptionBackgroundOpacityChange = function(event) {
-    this.setBackgroundOpacity(event.target.value);
+    this.setBackgroundOpacity(event.target.value/100);
   };
   onCaptionTextOpacityChange = function(event) {
-    this.setTextOpacity(event.target.value);
+    this.setTextOpacity(event.target.value/100);
   };
   onCaptionWindowOpacityChange = function(event) {
-    this.setWindowOpacity(event.target.value);
+    this.setWindowOpacity(event.target.value/100);
   };
 
   // Bind Handlers
-  addEvent(captionSizeEl, 'change', onCaptionSizeChange);
-  addEvent(captionFontFamilyEl, 'change', onCaptionFontFamilyChange);
-  addEvent(captionEdgeStyleEl, 'change', onCaptionEdgeStyleChange);
-  addEvent(captionBackgroundOpacityEl, 'change', onCaptionBackgroundOpacityChange);
-  addEvent(captionTextOpacityEl, 'change', onCaptionTextOpacityChange);
-  addEvent(captionWindowOpacityEl, 'change', onCaptionWindowOpacityChange);
+
+  addEvent(captionSizeEl, 'change', vjs.bind(this, onCaptionSizeChange));
+  addEvent(captionFontFamilyEl, 'change', vjs.bind(this,onCaptionFontFamilyChange));
+  addEvent(captionEdgeStyleEl, 'change', vjs.bind(this,onCaptionEdgeStyleChange));
+  addEvent(captionBackgroundOpacityEl, 'change', vjs.bind(this,onCaptionBackgroundOpacityChange));
+  addEvent(captionTextOpacityEl, 'change', vjs.bind(this,onCaptionTextOpacityChange));
+  addEvent(captionWindowOpacityEl, 'change', vjs.bind(this,onCaptionWindowOpacityChange));
 
   return el;
 };
@@ -170,7 +171,6 @@ vjs.CaptionsSettingsDisplay.prototype.show = function(){
 };
 // Update the values of the display components
 vjs.CaptionsSettingsDisplay.prototype.update = function(){
-  console.log('update values', this.captionOptions);
   this.captionSizeEl.value = this.captionOptions['font-size'].replace('px','');
   this.captionSizeOutputEl.innerHTML = this.captionOptions['font-size'];
   this.captionTextOpacityEl.value = this.captionOptions['text-opacity']*100;
