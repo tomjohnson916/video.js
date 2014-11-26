@@ -10,7 +10,7 @@ vjs.CaptionsSettingsDisplay = vjs.Component.extend({
 
     var captionOptions = this.captionOptions = {
       'font-family': 'Arial',
-      'font-size': '15px',
+      'font-size': '11px',
       'color': '#FFFFFF',
       'text-opacity': 1,
       'background-color': '#000000',
@@ -21,6 +21,8 @@ vjs.CaptionsSettingsDisplay = vjs.Component.extend({
     };
 
     this.hide();
+
+    // testing
     this.show();
   }
 });
@@ -109,6 +111,18 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
 
   el.appendChild(this.contentEl_);
 
+  // Define Elements
+  this.captionSizeEl = captionSizeEl = this.contentEl_.querySelector('.vjs-caption-font-size');
+  this.captionSizeOutputEl = captionSizeOutputEl = this.contentEl_.querySelector('.vjs-caption-font-size-output');
+  this.captionFontFamilyEl = captionFontFamilyEl = this.contentEl_.querySelector('.vjs-caption-font-family');
+  this.captionEdgeStyleEl = captionEdgeStyleEl = this.contentEl_.querySelector('.vjs-caption-edge-style');
+  this.captionTextOpacityEl = captionTextOpacityEl = this.contentEl_.querySelector('.vjs-caption-text-opacity');
+  this.captionTextOpacityOutputEl = captionTextOpacityOutputEl = this.contentEl_.querySelector('.vjs-caption-text-opacity-output');
+  this.captionBackgroundOpacityEl = captionBackgroundOpacityEl = this.contentEl_.querySelector('.vjs-caption-background-opacity');
+  this.captionBackgroundOpacityOutputEl = captionBackgroundOpacityOutputEl = this.contentEl_.querySelector('.vjs-caption-background-opacity-output');
+  this.captionWindowOpacityEl = captionWindowOpacityEl = this.contentEl_.querySelector('.vjs-caption-window-opacity');
+  this.captionWindowOpacityOutputEl = captionWindowOpacityOutputEl = this.contentEl_.querySelector('.vjs-caption-window-opacity-output');
+
   // Add Event Handlers
   addEvent = function(el, type, callback) {
     if (el.addEventListener) {
@@ -127,28 +141,14 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
     this.setEdgeStyle(event.target.value);
   };
   onCaptionBackgroundOpacityChange = function(event) {
-    this.captionOptions['background-opacity'] = event.target.value;
-    captionBackgroundOpacityOutputEl.innerHTML = event.target.value + '%';
+    this.setBackgroundOpacity(event.target.value);
   };
   onCaptionTextOpacityChange = function(event) {
-    this.captionOptions['text-opacity'] = event.target.value / 100;
-    captionTextOpacityOutputEl.innerHTML = event.target.value + '%';
+    this.setTextOpacity(event.target.value);
   };
   onCaptionWindowOpacityChange = function(event) {
-    this.captionOptions['window-opacity'] = event.target.value;
-    captionWindowOpacityOutputEl.innerHTML = event.target.value + '%';
+    this.setWindowOpacity(event.target.value);
   };
-  // Define Elements
-  captionSizeEl = this.contentEl_.querySelector('.vjs-caption-font-size');
-  captionSizeOutputEl = this.contentEl_.querySelector('.vjs-caption-font-size-output');
-  captionFontFamilyEl = this.contentEl_.querySelector('.vjs-caption-font-family');
-  captionEdgeStyleEl = this.contentEl_.querySelector('.vjs-caption-edge-style');
-  captionTextOpacityEl = this.contentEl_.querySelector('.vjs-caption-text-opacity');
-  captionTextOpacityOutputEl = this.contentEl_.querySelector('.vjs-caption-text-opacity-output');
-  captionBackgroundOpacityEl = this.contentEl_.querySelector('.vjs-caption-background-opacity');
-  captionBackgroundOpacityOutputEl = this.contentEl_.querySelector('.vjs-caption-background-opacity-output');
-  captionWindowOpacityEl = this.contentEl_.querySelector('.vjs-caption-window-opacity');
-  captionWindowOpacityOutputEl = this.contentEl_.querySelector('.vjs-caption-window-opacity-output');
 
   // Bind Handlers
   addEvent(captionSizeEl, 'change', onCaptionSizeChange);
@@ -168,20 +168,45 @@ vjs.CaptionsSettingsDisplay.prototype.show = function(){
   this.update();
   vjs.Component.prototype.show.call(this);
 };
-// Update the values of the input components
+// Update the values of the display components
 vjs.CaptionsSettingsDisplay.prototype.update = function(){
   console.log('update values', this.captionOptions);
+  this.captionSizeEl.value = this.captionOptions['font-size'].replace('px','');
+  this.captionSizeOutputEl.innerHTML = this.captionOptions['font-size'];
+  this.captionTextOpacityEl.value = this.captionOptions['text-opacity']*100;
+  this.captionTextOpacityOutputEl.innerHTML = (this.captionOptions['text-opacity']*100) + '%';
+  this.captionBackgroundOpacityEl.value = this.captionOptions['background-opacity']*100;
+  this.captionBackgroundOpacityOutputEl.innerHTML = (this.captionOptions['background-opacity']*100) + '%';
+  this.captionWindowOpacityEl.value = this.captionOptions['window-opacity']*100;
+  this.captionWindowOpacityOutputEl.innerHTML = (this.captionOptions['window-opacity']*100) + '%';
 };
 // Set the Caption Size
 vjs.CaptionsSettingsDisplay.prototype.setCaptionSize = function(fontSize) {
   this.captionOptions['font-size'] = fontSize + 'px';
-  this.captionSizeOutputEl.innerHTML = fontSize;
+  this.update();
 };
 // Set the Caption FontFamily
 vjs.CaptionsSettingsDisplay.prototype.setCaptionFontFamily = function(fontFamily) {
   this.captionOptions['font-family'] = fontFamily;
+  this.update();
 };
 // Set the Edge Style
 vjs.CaptionsSettingsDisplay.prototype.setEdgeStyle = function(edgeStyle) {
   this.captionOptions['edge-style'] = edgeStyle;
+  this.update();
+};
+// Set the Background Opacity
+vjs.CaptionsSettingsDisplay.prototype.setBackgroundOpacity = function(opacity) {
+  this.captionOptions['background-opacity'] = opacity;
+  this.update();
+};
+// Set the Text Opacity
+vjs.CaptionsSettingsDisplay.prototype.setTextOpacity = function(opacity) {
+  this.captionOptions['text-opacity'] = opacity;
+  this.update();
+};
+// Set the Window Opacity
+vjs.CaptionsSettingsDisplay.prototype.setWindowOpacity = function(opacity) {
+  this.captionOptions['window-opacity'] = opacity;
+  this.update();
 };
