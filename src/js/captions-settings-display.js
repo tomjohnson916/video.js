@@ -34,8 +34,8 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
   // Input Elements
     captionSizeEl, captionSizeOutputEl, captionFontFamilyEl, captionEdgeStyleEl,
     captionTextOpacityEl, captionTextOpacityOutputEl, captionBackgroundOpacityEl,
-    captionBackgroundOpacityOutputEl, captionWindowOpacityEl,
-    captionWindowOpacityOutputEl,
+    captionBackgroundOpacityOutputEl, captionWindowOpacityEl, textColorEl,
+    captionWindowOpacityOutputEl, backgroundColorEl, windowColorEl,
 
   // Event Handlers
     addEvent, onCaptionSizeChange, onCaptionFontFamilyChange, onCaptionEdgeStyleChange,
@@ -53,14 +53,14 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
   headerEl = vjs.Component.prototype.createEl.call(this, 'div', {
     className: 'vjs-captions-header',
     innerHTML: '<label>' + this.localize('Captions Settings') + '</label>' +
-    '<a href="#">' + this.localize('close') + '</a>'
+    '<a class="vjs-captions-close-btn" href="#">' + this.localize('close') + '</a>'
   });
 
   leftCategoryEl = vjs.Component.prototype.createEl.call(this, 'div', {
     className: 'vjs-captions-category',
     innerHTML: '<div>' +
     '<label>' + this.localize('Caption Sizes') + '</label>' +
-    '<input class="vjs-caption-font-size" type="range" min="10" max="20" value="11"/>' +
+    '<input class="vjs-caption-font-size" type="range" min="10" max="20"/>' +
     '<label class="vjs-caption-font-size-output">15</label>' +
     '</div>' +
     '<div>' +
@@ -81,7 +81,36 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
 
   middleCategoryEl = vjs.Component.prototype.createEl.call(this, 'div', {
     className: 'vjs-captions-category',
-    innerHTML: '<div class="vjs-captions-category"><label>Color Pickers</label></div>'
+    innerHTML: '<div>' +
+    '<label>' + this.localize('Text Color') + '</label>' +
+    '<select class="vjs-caption-font-color">' +
+    '<option value="#000000">Black</option>' +
+    '<option value="#FFFFFF" selected>White</option>' +
+    '<option value="#0000FF">Blue</option>' +
+    '<option value="#FF0000">Red</option>' +
+    '<option value="#00FF00">Green</option>' +
+    '</select>' +
+    '</div>' +
+    '<div>' +
+    '<label>' + this.localize('Background Color') + '</label>' +
+    '<select class="vjs-caption-background-color">' +
+    '<option value="#000000" selected>Black</option>' +
+    '<option value="#FFFFFF">White</option>' +
+    '<option value="#0000FF">Blue</option>' +
+    '<option value="#FF0000">Red</option>' +
+    '<option value="#00FF00">Green</option>' +
+    '</select>' +
+    '</div>' +
+    '<div>' +
+    '<label>' + this.localize('Window Color') + '</label>' +
+    '<select class="vjs-caption-window-color">' +
+    '<option value="#000000" selected>Black</option>' +
+    '<option value="#FFFFFF">White</option>' +
+    '<option value="#0000FF">Blue</option>' +
+    '<option value="#FF0000">Red</option>' +
+    '<option value="#00FF00">Green</option>' +
+    '</select>' +
+    '</div>'
   });
 
   rightCategoryEl = vjs.Component.prototype.createEl.call(this, 'div', {
@@ -123,6 +152,10 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
   this.captionWindowOpacityEl = captionWindowOpacityEl = this.contentEl_.querySelector('.vjs-caption-window-opacity');
   this.captionWindowOpacityOutputEl = captionWindowOpacityOutputEl = this.contentEl_.querySelector('.vjs-caption-window-opacity-output');
 
+  this.textColorEl = textColorEl = this.contentEl_.querySelector('.vjs-caption-edge-style');
+  this.backgroundColorEl = backgroundColorEl = this.contentEl_.querySelector('.vjs-caption-edge-style');
+  this.windowColorEl = windowColorEl = this.contentEl_.querySelector('.vjs-caption-edge-style');
+
   // Add Event Handlers
   addEvent = function(el, type, callback) {
     if (el.addEventListener) {
@@ -149,9 +182,18 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
   onCaptionWindowOpacityChange = function(event) {
     this.setWindowOpacity(event.target.value/100);
   };
+  onCaptionFontColorChange = function(event) {
+    this.setEdgeStyle(event.target.value);
+  };
+  onCaptionBackgroundColorChange = function(event) {
+    this.setEdgeStyle(event.target.value);
+  };
+  onCaptionWindowColorChange = function(event) {
+    this.setEdgeStyle(event.target.value);
+  };
 
   // Bind Handlers
-
+  addEvent(headerEl.querySelector('.vjs-captions-close-btn'), 'click', vjs.bind(this,function(){this.hide()}));
   addEvent(captionSizeEl, 'change', vjs.bind(this, onCaptionSizeChange));
   addEvent(captionFontFamilyEl, 'change', vjs.bind(this,onCaptionFontFamilyChange));
   addEvent(captionEdgeStyleEl, 'change', vjs.bind(this,onCaptionEdgeStyleChange));
@@ -195,17 +237,17 @@ vjs.CaptionsSettingsDisplay.prototype.setEdgeStyle = function(edgeStyle) {
   this.captionOptions['edge-style'] = edgeStyle;
   this.update();
 };
-// Set the Background Opacity
+// Set the Background Opacity 0-1
 vjs.CaptionsSettingsDisplay.prototype.setBackgroundOpacity = function(opacity) {
   this.captionOptions['background-opacity'] = opacity;
   this.update();
 };
-// Set the Text Opacity
+// Set the Text Opacity 0-1
 vjs.CaptionsSettingsDisplay.prototype.setTextOpacity = function(opacity) {
   this.captionOptions['text-opacity'] = opacity;
   this.update();
 };
-// Set the Window Opacity
+// Set the Window Opacity 0-1
 vjs.CaptionsSettingsDisplay.prototype.setWindowOpacity = function(opacity) {
   this.captionOptions['window-opacity'] = opacity;
   this.update();
