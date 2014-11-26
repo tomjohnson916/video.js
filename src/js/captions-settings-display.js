@@ -183,13 +183,13 @@ vjs.CaptionsSettingsDisplay.prototype.createEl = function(){
     this.setWindowOpacity(event.target.value/100);
   };
   onCaptionFontColorChange = function(event) {
-    this.setEdgeStyle(event.target.value);
+    this.setFontColor(event.target.value);
   };
   onCaptionBackgroundColorChange = function(event) {
-    this.setEdgeStyle(event.target.value);
+    this.setBackgroundColor(event.target.value);
   };
   onCaptionWindowColorChange = function(event) {
-    this.setEdgeStyle(event.target.value);
+    this.setWindowColor(event.target.value);
   };
 
   // Bind Handlers
@@ -250,5 +250,20 @@ vjs.CaptionsSettingsDisplay.prototype.setTextOpacity = function(opacity) {
 // Set the Window Opacity 0-1
 vjs.CaptionsSettingsDisplay.prototype.setWindowOpacity = function(opacity) {
   this.captionOptions['window-opacity'] = opacity;
+  this.update();
+};
+// Set the Font Color
+vjs.CaptionsSettingsDisplay.prototype.setFontColor = function(colorHex) {
+  this.captionOptions['color'] = colorHex;
+  this.update();
+};
+// Set the Background Color
+vjs.CaptionsSettingsDisplay.prototype.setBackgroundColor = function(colorHex) {
+  this.captionOptions['background-color'] = colorHex;
+  this.update();
+};
+// Set the Font Color
+vjs.CaptionsSettingsDisplay.prototype.setWindowColor = function(colorHex) {
+  this.captionOptions['window-color'] = colorHex;
   this.update();
 };
